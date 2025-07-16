@@ -1,0 +1,57 @@
+.message-sent {
+    // max-width: 240px;
+    // margin: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #fafafa;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    flex-direction: column;
+
+    .text {
+        color: rgba(#000000, .65);
+    }
+}
+  
+.message-received {
+    max-width: 240px;
+    // margin: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-loading {
+    max-width: 240px;
+    // margin: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-server {
+    max-width: 240px;
+    // margin: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #FFF7E6;
+    border: 1px solid #FFD591;
+    display: flex;
+    flex-direction: column;
+
+    .text {
+        color: rgba(#AD4E00, 1);
+    }
+}
+
+.text {
+    word-break: break-all;       /* 在任意字符间断开 */
+    overflow-wrap: break-word;   /* 长单词或URL等在边界内换行 */
+    font-size: 12px;
+}

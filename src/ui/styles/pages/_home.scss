@@ -1,0 +1,65 @@
+.homepage {
+  .recentActionsArea {
+    margin: .75em;
+    margin-bottom: 0em;
+    padding: 0 .75em;
+    box-shadow: 1px 1px 4px rgba(#000000, .25);
+    border-radius: 4px;
+    z-index: 99;
+  }
+  .loginPageForProbe {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    // align-content: center;
+    // justify-items: center;
+    padding: 24px;
+  }
+  // .logo {
+  //   width: 6.5em;
+  //   height: 6em;
+  //   padding: 1.5em;
+  //   will-change: filter;
+  //   transition: filter 300ms;
+  //   object-fit: contain;
+  // }
+  // .logo.figma:hover {
+  //   filter: drop-shadow(0 0 2em rgba($brand-figma, 0.667));
+  // }
+  // .logo.vite:hover {
+  //   filter: drop-shadow(0 0 2em rgba($brand-vite, 0.667));
+  // }
+  // .logo.react:hover {
+  //   filter: drop-shadow(0 0 2em rgba($brand-react, 0.667));
+  // }
+
+  // @keyframes logo-spin {
+  //   from {
+  //     transform: rotate(0deg);
+  //   }
+  //   to {
+  //     transform: rotate(360deg);
+  //   }
+  // }
+
+  // @media (prefers-reduced-motion: no-preference) {
+  //   a:nth-of-type(3) .logo {
+  //     animation: logo-spin infinite 20s linear;
+  //   }
+  // }
+
+  // .card {
+  //   padding: 1em;
+  // }
+
+  // .read-the-docs {
+  //   color: #888;
+  //   & > span {
+  //     font-family: Alkatra;
+  //   }
+  // }
+}

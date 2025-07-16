@@ -1,0 +1,23 @@
+.cardTabContainer {
+    max-width: 320px;
+    border: solid 1px #d9d9d9;
+    border-width: 0 0 1 0;
+
+    .ant-tabs-nav {
+        margin: 0 !important;
+    }
+    
+    .ant-tabs-content {
+        padding: 8px 16px 0 16px;
+    }
+}
+
+.cardTabChildren {
+    margin: 0;
+    margin-bottom: 8px;
+    color: #777777;
+}
+
+.AI_behavior_emphasis {
+    color: rgb(22, 119, 225);
+}
