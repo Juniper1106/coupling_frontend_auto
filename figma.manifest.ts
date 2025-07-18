@@ -1,7 +1,7 @@
 // https://www.figma.com/plugin-docs/manifest/
 export default {
-  name: "202506coupling-manual",
-  id: "1520346243325904140",
+  name: "202506coupling-auto",
+  id: "1527295112135238807",
   api: "1.0.0",
   main: "plugin.js",
   ui: "index.html",

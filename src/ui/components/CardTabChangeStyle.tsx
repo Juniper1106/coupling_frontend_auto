@@ -43,6 +43,7 @@ const CardTabChangeStyle: React.FC = () => {
   const setCouplingStyle = useCouplingStyleUpdate();      // 获取更新 CouplingStyle 的方法
   const setProactiveInterval = useProactiveIntervalUpdate();
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now());
+  const [activateKey, setActivateKey] = useState<string>('DISC')
 
   // 以notification加音效提醒状态切换
   useEffect(() => {
@@ -61,6 +62,13 @@ const CardTabChangeStyle: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [lastUpdateTime]);
 
+  useEffect(() => {
+    socket.on('change_AI_style', (data) => {
+      setActivateKey(data);
+      handleTabChange(data);
+    })
+  },[activateKey])
+
   const handleTabChange = async (key: string) => {
     console.log(key);
     setCouplingStyle(key);  // 使用全局更新方法更新 CouplingStyle
@@ -74,32 +82,35 @@ const CardTabChangeStyle: React.FC = () => {
         },
         body: JSON.stringify({style: key})
       }
-    ).then(
-      response => response.json()
-    ).then(
-      res => {
-        console.log(res.message)
-        console.log(res.proactive_interval)
-        setProactiveInterval(res.proactive_interval)
+    ).then(async response => {
+      if (response.status === 429) {
+        console.warn("请求频繁，后端处理中，已拒绝本次请求");
+        return;
       }
-    ).catch(
-      error => console.error(error)
-    )
-  }
 
-  const stopbackend = () => {
-    socket.emit('stop_background_task');
+      if (!response.ok) {
+        throw new Error(`HTTP error. status: ${response.status}`);
+      }
+
+      const res = await response.json();
+      console.log(res.message)
+      console.log(res.proactive_interval)
+      setProactiveInterval(res.proactive_interval)
+
+    }).catch(
+      error => console.error('改变模式失败：', error)
+    )
   }
 
   return (
     <div className='cardTabContainer'>
       <Tabs
         defaultActiveKey={couplingStyle}
+        activeKey={activateKey}
         type="card"
         items={items}
         onChange={handleTabChange}
       />
-      {/* <FloatButton icon={<CloseOutlined /> } onClick={stopbackend}/> */}
     </div>
   );
 };

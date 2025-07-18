@@ -56,6 +56,7 @@ function App() {
     }
     return (
       <div className="loginPageForProbe">
+        <strong className='versionTag'>自动模式</strong>
         <Input size="large" placeholder="请输入被试编号" prefix={<UserOutlined />} value={userName} onChange={(e) => setUserName(e.target.value)} />
         <br />
         <Input size="large" placeholder="请输入任务内容" value={task} onChange={(e) => setTask(e.target.value)} />
