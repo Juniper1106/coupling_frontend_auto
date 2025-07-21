@@ -6,7 +6,6 @@ import { socket } from './socket';
 import notifyAudioStyleChangeTimeout from '@ui/assets/audio/style_change_timeout.mp3';
 import { NetworkMessages } from '@common/network/messages';
 import { useProactiveIntervalUpdate } from '@ui/contexts/ProactiveInterval';
-import { ReloadOutlined, CloseOutlined } from "@ant-design/icons";
 
 const items: TabsProps['items'] = [
     {
@@ -46,26 +45,28 @@ const CardTabChangeStyle: React.FC = () => {
   const [activateKey, setActivateKey] = useState<string>('DISC')
 
   // 以notification加音效提醒状态切换
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      if (Date.now() - lastUpdateTime >= 180000) {
-        console.log('已等待3分钟，发送inactive_update请求');
-        const audio = new Audio(notifyAudioStyleChangeTimeout);
-        audio.play();
-        NetworkMessages.NOTIFY_STYLE_CHANGE.send({ message: "状态调整提醒，调整后请大声思考", timeout: 3000});
+  // useEffect(() => {
+  //   const intervalId = setInterval(async () => {
+  //     if (Date.now() - lastUpdateTime >= 180000) {
+  //       console.log('已等待3分钟，发送inactive_update请求');
+  //       const audio = new Audio(notifyAudioStyleChangeTimeout);
+  //       audio.play();
+  //       NetworkMessages.NOTIFY_STYLE_CHANGE.send({ message: "状态调整提醒，调整后请大声思考", timeout: 3000});
 
-        setLastUpdateTime(Date.now());
-      }
-    }, 1000); // 每秒检查一次
+  //       setLastUpdateTime(Date.now());
+  //     }
+  //   }, 1000); // 每秒检查一次
 
-    // 清除定时器
-    return () => clearInterval(intervalId);
-  }, [lastUpdateTime]);
+  //   // 清除定时器
+  //   return () => clearInterval(intervalId);
+  // }, [lastUpdateTime]);
 
   useEffect(() => {
     socket.on('change_AI_style', (data) => {
       setActivateKey(data);
       handleTabChange(data);
+      const audio = new Audio(notifyAudioStyleChangeTimeout);
+      audio.play();
     })
   },[activateKey])
 
