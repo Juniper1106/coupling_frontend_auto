@@ -68,7 +68,7 @@ const CardTabChangeStyle: React.FC = () => {
       const audio = new Audio(notifyAudioStyleChangeTimeout);
       audio.play();
     })
-  },[activateKey])
+  },[])
 
   const handleTabChange = async (key: string) => {
     console.log(key);
