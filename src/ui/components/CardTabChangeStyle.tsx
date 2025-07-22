@@ -63,16 +63,16 @@ const CardTabChangeStyle: React.FC = () => {
 
   useEffect(() => {
     socket.on('change_AI_style', (data) => {
-      setActivateKey(data);
       handleTabChange(data);
       const audio = new Audio(notifyAudioStyleChangeTimeout);
       audio.play();
     })
   },[])
-
+  
   const handleTabChange = async (key: string) => {
     console.log(key);
     setCouplingStyle(key);  // 使用全局更新方法更新 CouplingStyle
+    setActivateKey(key);
     setLastUpdateTime(Date.now());
     await fetch(
       'http://127.0.0.1:5010/style_change',
