@@ -44,32 +44,15 @@ const CardTabChangeStyle: React.FC = () => {
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now());
   const [activateKey, setActivateKey] = useState<string>('DISC')
 
-  // 以notification加音效提醒状态切换
-  // useEffect(() => {
-  //   const intervalId = setInterval(async () => {
-  //     if (Date.now() - lastUpdateTime >= 180000) {
-  //       console.log('已等待3分钟，发送inactive_update请求');
-  //       const audio = new Audio(notifyAudioStyleChangeTimeout);
-  //       audio.play();
-  //       NetworkMessages.NOTIFY_STYLE_CHANGE.send({ message: "状态调整提醒，调整后请大声思考", timeout: 3000});
-
-  //       setLastUpdateTime(Date.now());
-  //     }
-  //   }, 1000); // 每秒检查一次
-
-  //   // 清除定时器
-  //   return () => clearInterval(intervalId);
-  // }, [lastUpdateTime]);
-
   useEffect(() => {
     socket.on('change_AI_style', (data) => {
-      handleTabChange(data);
+      handleTabChangeFromBackend(data);
       const audio = new Audio(notifyAudioStyleChangeTimeout);
       audio.play();
     })
   },[])
-  
-  const handleTabChange = async (key: string) => {
+
+  const handleTabChangeFromBackend = async (key: string) => {
     console.log(key);
     setCouplingStyle(key);  // 使用全局更新方法更新 CouplingStyle
     setActivateKey(key);
@@ -103,6 +86,34 @@ const CardTabChangeStyle: React.FC = () => {
     )
   }
 
+  const handleTabChangeFromUser = async (key: string) => {
+    console.log(key);
+    setCouplingStyle(key);  // 使用全局更新方法更新 CouplingStyle
+    setActivateKey(key);
+    setLastUpdateTime(Date.now());
+    socket.emit("user_changed_style")
+    await fetch(
+      'http://127.0.0.1:5010/style_change',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({style: key})
+      }
+    ).then(
+      response => response.json()
+    ).then(
+      res => {
+        console.log(res.message)
+        console.log(res.proactive_interval)
+        setProactiveInterval(res.proactive_interval)
+      }
+    ).catch(
+      error => console.error(error)
+    )
+  }
+
   return (
     <div className='cardTabContainer'>
       <Tabs
@@ -110,7 +121,7 @@ const CardTabChangeStyle: React.FC = () => {
         activeKey={activateKey}
         type="card"
         items={items}
-        onChange={handleTabChange}
+        onChange={handleTabChangeFromUser}
       />
     </div>
   );
